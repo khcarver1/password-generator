@@ -71,44 +71,43 @@ var specialCharacters = [
   '^',
   '?',
   ':',
-  ',',
-  ')',
-  '(',
-  '}',
-  '{',
-  ']',
-  '[',
-  '~',
-  '-',
-  '_',
-  '.'
+  '~'
 ];
+
+
 function generatePassword() {
+
+  var generatedPassword = "";
   //How many chars
   var passwordLength = window.prompt("length");
-    console.log(passwordLength);
-  
-    var includeUpperCase = window.confirm("Would you like it to include uppercase letters?");
-    if (includeUpperCase) {
-      arr = arr.concat(upperCasedCharacters);
-    }
+  if (passwordLength < 8 || passwordLength > 128) {
+    alert("Password must be between 8 and 128 characters");
+    return;
+  }
+  var includeUpperCase = window.confirm("Would you like it to include uppercase letters?");
+  if (includeUpperCase) {
+    arr = arr.concat(upperCasedCharacters);
+  }
   var includeLowerCase = window.confirm("Would you like it to include lower case letters?");
-    if (includeLowerCase) {
-      arr = arr.concat(lowerCasedCharacters);
-    }
+  if (includeLowerCase) {
+    arr = arr.concat(lowerCasedCharacters);
+  }
   var includeNumbers = window.confirm("Would you like it to include numbers?");
-    if (includeNumbers) {
-      arr = arr.concat(numericCharacters);
+  if (includeNumbers) {
+    arr = arr.concat(numericCharacters);
   }
   var includeSymbols = window.confirm("Would you like it to include symbols?");
-    if (includeSymbols) {
-      arr = arr.concat(specialCharacters);
-  } 
-  function shuffleArray(arr) {
-    arr.sort(() => Math.random() - 0.5);
+  if (includeSymbols) {
+    arr = arr.concat(specialCharacters);
   }
-  shuffleArray(arr);
-  return arr;
+  if (!includeUpperCase && !includeLowerCase && !includeNumbers && !includeSymbols) {
+    alert("You must select at least one character type");
+    return generatePassword();
+  }
+  for (var i = 0; i < passwordLength; i++) {
+    generatedPassword += arr[Math.floor(Math.random() * arr.length)];
+  }
+  return generatedPassword;
 }
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
